@@ -15,6 +15,7 @@ function createBlock(image, posX, posY) {
 
 // create a random tetromino
 // https://en.wikipedia.org/wiki/Tetromino
+// return shape number in case we need it later
 function createTetro(){
     var shape = Math.round(Math.random() * 6);
     switch(shape){
@@ -61,20 +62,36 @@ function createTetro(){
             createBlock("./res/sprites/m_block_red.png", BLOCK_HALF * 7, BLOCK_HALF * 3);
             break;
     }
-
+    return shape;
 }
 
 createTetro();
-
 function animate() {
     
     // render the stage
     renderer.render(stage);
-    
+
+    var validMove = false;
+    var dropSpeed = 2;
+
+    // check all blocks in tetromino won't violate conditions on move
+    for(var i = 0; i < 4; i++){
+        if((RENDERER_Y - BLOCK_HALF) - (allBlocks[i].sprite.position.y + dropSpeed) >= 0){
+            validMove = true;
+        }
+        else{
+            validMove = false;
+        }
+    }
+
     // do stuff
     for(var i = 0; i < 4; i++){
         //allBlocks[i].sprite.position.y += BLOCK_SIZE;
-        allBlocks[i].sprite.position.y += 2;
+        
+        if(validMove){
+            allBlocks[i].sprite.position.y += dropSpeed;
+        }
+
     }
 
     //setTimeout(function(){requestAnimationFrame(animate);}, 750);

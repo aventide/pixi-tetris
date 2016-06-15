@@ -5,7 +5,7 @@
  * Keeps track of block textures, positions, dynamics
  *
  * Author: Alex J. Staples
- * Date last modified: 8/9/15
+ * Date last modified: 6/14/16
  *
  */
 function TBlock(image, posX, posY) {
