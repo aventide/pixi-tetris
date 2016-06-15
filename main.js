@@ -18,48 +18,49 @@ function createBlock(image, posX, posY) {
 // return shape number in case we need it later
 function createTetro(){
     var shape = Math.round(Math.random() * 6);
+    var basePoint = ((Math.round(Math.random() * 10) * 2) + 1);
     switch(shape){
         case 0:
-            createBlock("./res/sprites/m_block_red.png", BLOCK_HALF * 5, BLOCK_HALF);
-            createBlock("./res/sprites/m_block_red.png", BLOCK_HALF * 7, BLOCK_HALF);
-            createBlock("./res/sprites/m_block_red.png", BLOCK_HALF * 5, BLOCK_HALF * 3);
-            createBlock("./res/sprites/m_block_red.png", BLOCK_HALF * 7, BLOCK_HALF * 3);
+            createBlock("./res/sprites/m_block_red.png", BLOCK_HALF * basePoint, BLOCK_HALF);
+            createBlock("./res/sprites/m_block_red.png", BLOCK_HALF * (basePoint + 2), BLOCK_HALF);
+            createBlock("./res/sprites/m_block_red.png", BLOCK_HALF * basePoint, BLOCK_HALF * 3);
+            createBlock("./res/sprites/m_block_red.png", BLOCK_HALF * (basePoint + 2), BLOCK_HALF * 3);
             break;
         case 1:
-            createBlock("./res/sprites/m_block_blue.png", BLOCK_HALF * 9, BLOCK_HALF);
-            createBlock("./res/sprites/m_block_blue.png", BLOCK_HALF * 9, BLOCK_HALF * 3);
-            createBlock("./res/sprites/m_block_blue.png", BLOCK_HALF * 9, BLOCK_HALF * 5);
-            createBlock("./res/sprites/m_block_blue.png", BLOCK_HALF * 9, BLOCK_HALF * 7);
+            createBlock("./res/sprites/m_block_blue.png", BLOCK_HALF * basePoint, BLOCK_HALF);
+            createBlock("./res/sprites/m_block_blue.png", BLOCK_HALF * basePoint, BLOCK_HALF * 3);
+            createBlock("./res/sprites/m_block_blue.png", BLOCK_HALF * basePoint, BLOCK_HALF * 5);
+            createBlock("./res/sprites/m_block_blue.png", BLOCK_HALF * basePoint, BLOCK_HALF * 7);
             break;
         case 2:
-            createBlock("./res/sprites/m_block_yellow.png", BLOCK_HALF * 5, BLOCK_HALF);
-            createBlock("./res/sprites/m_block_yellow.png", BLOCK_HALF * 5, BLOCK_HALF * 3);
-            createBlock("./res/sprites/m_block_yellow.png", BLOCK_HALF * 7, BLOCK_HALF * 3);
-            createBlock("./res/sprites/m_block_yellow.png", BLOCK_HALF * 7, BLOCK_HALF * 5);
+            createBlock("./res/sprites/m_block_yellow.png", BLOCK_HALF * basePoint, BLOCK_HALF);
+            createBlock("./res/sprites/m_block_yellow.png", BLOCK_HALF * basePoint, BLOCK_HALF * 3);
+            createBlock("./res/sprites/m_block_yellow.png", BLOCK_HALF * (basePoint + 2), BLOCK_HALF * 3);
+            createBlock("./res/sprites/m_block_yellow.png", BLOCK_HALF * (basePoint + 2), BLOCK_HALF * 5);
             break;
         case 3:
-            createBlock("./res/sprites/m_block_green.png", BLOCK_HALF * 3, BLOCK_HALF);
-            createBlock("./res/sprites/m_block_green.png", BLOCK_HALF * 3, BLOCK_HALF * 3);
-            createBlock("./res/sprites/m_block_green.png", BLOCK_HALF * 1, BLOCK_HALF * 3);
-            createBlock("./res/sprites/m_block_green.png", BLOCK_HALF * 1, BLOCK_HALF * 5);
+            createBlock("./res/sprites/m_block_green.png", BLOCK_HALF * (basePoint + 2), BLOCK_HALF);
+            createBlock("./res/sprites/m_block_green.png", BLOCK_HALF * (basePoint + 2), BLOCK_HALF * 3);
+            createBlock("./res/sprites/m_block_green.png", BLOCK_HALF * basePoint, BLOCK_HALF * 3);
+            createBlock("./res/sprites/m_block_green.png", BLOCK_HALF * basePoint, BLOCK_HALF * 5);
             break;
         case 4:
-            createBlock("./res/sprites/m_block_pink.png", BLOCK_HALF * 11, BLOCK_HALF);
-            createBlock("./res/sprites/m_block_pink.png", BLOCK_HALF * 11, BLOCK_HALF * 3);
-            createBlock("./res/sprites/m_block_pink.png", BLOCK_HALF * 11, BLOCK_HALF * 5);
-            createBlock("./res/sprites/m_block_pink.png", BLOCK_HALF * 13, BLOCK_HALF * 5);
+            createBlock("./res/sprites/m_block_pink.png", BLOCK_HALF * basePoint, BLOCK_HALF);
+            createBlock("./res/sprites/m_block_pink.png", BLOCK_HALF * basePoint, BLOCK_HALF * 3);
+            createBlock("./res/sprites/m_block_pink.png", BLOCK_HALF * basePoint, BLOCK_HALF * 5);
+            createBlock("./res/sprites/m_block_pink.png", BLOCK_HALF * (basePoint + 2), BLOCK_HALF * 5);
             break;
         case 5:
-            createBlock("./res/sprites/m_block_tangerine.png", BLOCK_HALF * 15, BLOCK_HALF);
-            createBlock("./res/sprites/m_block_tangerine.png", BLOCK_HALF * 15, BLOCK_HALF * 3);
-            createBlock("./res/sprites/m_block_tangerine.png", BLOCK_HALF * 15, BLOCK_HALF * 5);
-            createBlock("./res/sprites/m_block_tangerine.png", BLOCK_HALF * 13, BLOCK_HALF * 5);
+            createBlock("./res/sprites/m_block_tangerine.png", BLOCK_HALF * (basePoint + 2), BLOCK_HALF);
+            createBlock("./res/sprites/m_block_tangerine.png", BLOCK_HALF * (basePoint + 2), BLOCK_HALF * 3);
+            createBlock("./res/sprites/m_block_tangerine.png", BLOCK_HALF * (basePoint + 2), BLOCK_HALF * 5);
+            createBlock("./res/sprites/m_block_tangerine.png", BLOCK_HALF * basePoint, BLOCK_HALF * 5);
             break;
         default:
-            createBlock("./res/sprites/m_block_red.png", BLOCK_HALF * 5, BLOCK_HALF);
-            createBlock("./res/sprites/m_block_red.png", BLOCK_HALF * 7, BLOCK_HALF);
-            createBlock("./res/sprites/m_block_red.png", BLOCK_HALF * 5, BLOCK_HALF * 3);
-            createBlock("./res/sprites/m_block_red.png", BLOCK_HALF * 7, BLOCK_HALF * 3);
+            createBlock("./res/sprites/m_block_red.png", BLOCK_HALF * basePoint, BLOCK_HALF);
+            createBlock("./res/sprites/m_block_red.png", BLOCK_HALF * (basePoint + 2), BLOCK_HALF);
+            createBlock("./res/sprites/m_block_red.png", BLOCK_HALF * basePoint, BLOCK_HALF * 3);
+            createBlock("./res/sprites/m_block_red.png", BLOCK_HALF * (basePoint + 2), BLOCK_HALF * 3);
             break;
     }
     return shape;

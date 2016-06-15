@@ -16,7 +16,7 @@ document.onkeydown = function(e) {
             break;
         // down arrow
         case 40:
-
+            moveTetroDown();
             break;
 
         default: return; // exit this handler for other keys
@@ -46,7 +46,7 @@ function moveTetroLeft(){
 function moveTetroRight(){
     var validMove = false;
     for (var i = 1; i < 5; i++) {
-        //make sure to not go over the left edge
+        //make sure to not go over the right edge
         if((allBlocks[blockCount - i].sprite.position.x + BLOCK_SIZE) <= RENDERER_X - BLOCK_HALF){
             validMove = true;
         }
@@ -58,6 +58,25 @@ function moveTetroRight(){
     if (validMove){
         for (var i = 1; i < 5; i++) {
             allBlocks[blockCount - i].sprite.position.x += BLOCK_SIZE;
+        }
+    }
+}
+
+function moveTetroDown(){
+    var validMove = false;
+    for (var i = 1; i < 5; i++) {
+        //make sure to not go over the bottom edge
+        if(allBlocks[blockCount - i].sprite.position.y + BLOCK_SIZE <= (RENDERER_Y - BLOCK_HALF)){
+            validMove = true;
+        }
+        else{
+            validMove = false;
+            break;
+        }
+    }
+    if (validMove){
+        for (var i = 1; i < 5; i++) {
+            allBlocks[blockCount - i].sprite.position.y += BLOCK_SIZE;
         }
     }
 }
