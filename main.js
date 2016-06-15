@@ -66,6 +66,7 @@ function createTetro(){
 }
 
 createTetro();
+//setInterval(function(){createTetro()}, 3000);
 function animate() {
     
     // render the stage
@@ -75,26 +76,27 @@ function animate() {
     var dropSpeed = 2;
 
     // check all blocks in tetromino won't violate conditions on move
-    for(var i = 0; i < 4; i++){
-        if((RENDERER_Y - BLOCK_HALF) - (allBlocks[i].sprite.position.y + dropSpeed) >= 0){
+    for(var i = 1; i < 5; i++){
+        if((RENDERER_Y - BLOCK_HALF) - (allBlocks[blockCount - i].sprite.position.y + dropSpeed) >= 0){
             validMove = true;
         }
         else{
             validMove = false;
+            break;
         }
     }
 
-    // do stuff
-    for(var i = 0; i < 4; i++){
-        //allBlocks[i].sprite.position.y += BLOCK_SIZE;
-        
-        if(validMove){
-            allBlocks[i].sprite.position.y += dropSpeed;
+    // if no violation, move all 4 blocks in tetro downwards
+    if(validMove){
+        for(var i = 1; i < 5; i++){
+            allBlocks[blockCount - i].sprite.position.y += dropSpeed;
         }
-
+    }
+    // if violation occurred, it's done moving; make a new tetro up top
+    else{
+        createTetro();
     }
 
-    //setTimeout(function(){requestAnimationFrame(animate);}, 750);
     requestAnimationFrame(animate)
 
 
