@@ -40,6 +40,7 @@ function moveTetroLeft(){
         for (var i = 1; i < 5; i++) {
             allBlocks[blockCount - i].sprite.position.x -= BLOCK_SIZE;
         }
+        HighlightBlocksBelow();
     }
 }
 
@@ -59,6 +60,7 @@ function moveTetroRight(){
         for (var i = 1; i < 5; i++) {
             allBlocks[blockCount - i].sprite.position.x += BLOCK_SIZE;
         }
+        HighlightBlocksBelow();
     }
 }
 

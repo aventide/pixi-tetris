@@ -66,6 +66,22 @@ function createTetro(){
     return shape;
 }
 
+function HighlightBlocksBelow(){
+
+    // un highlight previously highlighted blocks
+    for(var i = 0; i < allBlocks.length - 4; i++){
+        allBlocks[i].sprite.alpha = 1;
+    }
+
+    // highlight blocks below active tetro
+    for(var i = 1; i < 5; i++){
+        if(allBlocks[allBlocks.length - i].getNearestBlockBelow() == undefined){
+            continue;
+        }
+        allBlocks[allBlocks.length - i].getNearestBlockBelow().sprite.alpha = 0.5;
+    }
+}
+
 createTetro();
 //setInterval(function(){createTetro()}, 3000);
 function animate() {
@@ -96,6 +112,7 @@ function animate() {
     // if violation occurred, it's done moving; make a new tetro up top
     else{
         createTetro();
+        HighlightBlocksBelow();
     }
 
     requestAnimationFrame(animate)

@@ -94,7 +94,7 @@ function TBlock(image, posX, posY) {
 	this.getBlocksBelow = function () {
 
 		var bottomBlocks = [];
-		for (var i = 0; i < allBlocks.length; i++) {
+		for (var i = 0; i < allBlocks.length - 4; i++) {
 			if ((allBlocks[i].sprite.position.x == this.sprite.position.x) &&
 				(allBlocks[i].sprite.position.y > this.sprite.position.y)) {
 				bottomBlocks.push(allBlocks[i]);
