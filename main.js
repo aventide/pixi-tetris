@@ -83,14 +83,22 @@ function HighlightBlocksBelow(){
 }
 
 // get the bottom block of a tetromino
+// effectively, this is the block closest to
+// another block below
 function getBottomTetro(){
+
     var bottomBlock = allBlocks[allBlocks.length - 1];
+
     for(var i = 2; i < 5; i++){
-        if(allBlocks[allBlocks.length - i].sprite.position.y > bottomBlock.sprite.position.y){
+        if(allBlocks[allBlocks.length - i].getNearestBlockBelow() == undefined){
+            continue;
+        }
+        var yDist = allBlocks[allBlocks.length - i].getNearestBlockBelow().sprite.position.y - allBlocks[allBlocks.length - i].sprite.position.y;
+        if(bottomBlock.getNearestBlockBelow() == undefined || yDist < bottomBlock.getNearestBlockBelow().sprite.position.y - bottomBlock.sprite.position.y){
             bottomBlock = allBlocks[allBlocks.length - i];
         }
     }
-    bottomBlock.sprite.alpha = 0.5;
+    //bottomBlock.sprite.alpha = 0.5;
     return bottomBlock;
 }
 
@@ -116,13 +124,20 @@ function animate() {
     // there are blocks below to collide with
     if(hasBlocksBelow){
         // determine if tetro can move down without intersecting another block
-        if(0){
+
+        // distance between bottom block of tetro and its block below
+        var yDist = (getBottomTetro().getNearestBlockBelow().sprite.position.y - getBottomTetro().sprite.position.y) - BLOCK_SIZE;
+        if(yDist > defaultDropSpeed){
             dy = defaultDropSpeed;
+            validMove = true;
+        }
+        else if(yDist != 0){
+            dy = yDist;
+            validMove = true;
         }
         else{
-            dy = 0;
+            validMove = false;
         }
-        validMove = true;
     }
     // there is empty space below to collide with
     else if(RENDERER_Y - (getBottomTetro().sprite.position.y + BLOCK_HALF) > 0){
