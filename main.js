@@ -82,31 +82,68 @@ function HighlightBlocksBelow(){
     }
 }
 
+// get the bottom block of a tetromino
+function getBottomTetro(){
+    var bottomBlock = allBlocks[allBlocks.length - 1];
+    for(var i = 2; i < 5; i++){
+        if(allBlocks[allBlocks.length - i].sprite.position.y > bottomBlock.sprite.position.y){
+            bottomBlock = allBlocks[allBlocks.length - i];
+        }
+    }
+    bottomBlock.sprite.alpha = 0.5;
+    return bottomBlock;
+}
+
+// create first tetromino
 createTetro();
-//setInterval(function(){createTetro()}, 3000);
 function animate() {
     
     // render the stage
     renderer.render(stage);
 
     var validMove = false;
-    var dropSpeed = 2;
+    var defaultDropSpeed = 2;
+    var dy = 0;
+    var hasBlocksBelow = false;
 
-    // check all blocks in tetromino won't violate conditions on move
     for(var i = 1; i < 5; i++){
-        if((RENDERER_Y - BLOCK_HALF) - (allBlocks[blockCount - i].sprite.position.y + dropSpeed) >= 0){
-            validMove = true;
-        }
-        else{
-            validMove = false;
+        if(allBlocks[allBlocks.length - i].getNearestBlockBelow() != undefined){
+            hasBlocksBelow = true;
             break;
         }
     }
 
-    // if no violation, move all 4 blocks in tetro downwards
+    // there are blocks below to collide with
+    if(hasBlocksBelow){
+        // determine if tetro can move down without intersecting another block
+        if(0){
+            dy = defaultDropSpeed;
+        }
+        else{
+            dy = 0;
+        }
+        validMove = true;
+    }
+    // there is empty space below to collide with
+    else if(RENDERER_Y - (getBottomTetro().sprite.position.y + BLOCK_HALF) > 0){
+        // determine if tetro can move down without violating bottom
+        if(RENDERER_Y - (getBottomTetro().sprite.position.y + BLOCK_HALF) >= defaultDropSpeed){
+            dy = defaultDropSpeed;
+        }
+        else{
+            dy = (RENDERER_Y - BLOCK_HALF) - getBottomTetro().sprite.position.y;
+        }
+        validMove = true;
+    }
+    // any other conditions are absolutely haram
+    else{
+        validMove = false;
+    }
+
+    // if no violation, move all 4 blocks in tetro downwards by dy
     if(validMove){
         for(var i = 1; i < 5; i++){
-            allBlocks[blockCount - i].sprite.position.y += dropSpeed;
+            allBlocks[blockCount - i].sprite.position.y += dy;
         }
     }
     // if violation occurred, it's done moving; make a new tetro up top
