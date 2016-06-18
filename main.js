@@ -4,6 +4,7 @@
 // to determine neighbors, etc
 var allBlocks = [];
 var blockCount = 0;
+var pivotBlock = undefined;
 
 function createBlock(image, posX, posY) {
     allBlocks.push(new TBlock(image, posX, posY));
@@ -19,6 +20,7 @@ function createBlock(image, posX, posY) {
 function createTetro(){
     var shape = Math.round(Math.random() * 6);
     var basePoint = ((Math.round(Math.random() * 10) * 2) + 1);
+    pivotBlock = undefined;
     switch(shape){
         case 0:
             createBlock("./res/sprites/m_block_red.png", BLOCK_HALF * basePoint, BLOCK_HALF);
@@ -31,30 +33,35 @@ function createTetro(){
             createBlock("./res/sprites/m_block_blue.png", BLOCK_HALF * basePoint, BLOCK_HALF * 3);
             createBlock("./res/sprites/m_block_blue.png", BLOCK_HALF * basePoint, BLOCK_HALF * 5);
             createBlock("./res/sprites/m_block_blue.png", BLOCK_HALF * basePoint, BLOCK_HALF * 7);
+            pivotBlock = allBlocks[allBlocks.length - 3];
             break;
         case 2:
             createBlock("./res/sprites/m_block_yellow.png", BLOCK_HALF * basePoint, BLOCK_HALF);
             createBlock("./res/sprites/m_block_yellow.png", BLOCK_HALF * basePoint, BLOCK_HALF * 3);
             createBlock("./res/sprites/m_block_yellow.png", BLOCK_HALF * (basePoint + 2), BLOCK_HALF * 3);
             createBlock("./res/sprites/m_block_yellow.png", BLOCK_HALF * (basePoint + 2), BLOCK_HALF * 5);
+            pivotBlock = allBlocks[allBlocks.length - 2];
             break;
         case 3:
             createBlock("./res/sprites/m_block_green.png", BLOCK_HALF * (basePoint + 2), BLOCK_HALF);
             createBlock("./res/sprites/m_block_green.png", BLOCK_HALF * (basePoint + 2), BLOCK_HALF * 3);
             createBlock("./res/sprites/m_block_green.png", BLOCK_HALF * basePoint, BLOCK_HALF * 3);
             createBlock("./res/sprites/m_block_green.png", BLOCK_HALF * basePoint, BLOCK_HALF * 5);
+            pivotBlock = allBlocks[allBlocks.length - 3];
             break;
         case 4:
             createBlock("./res/sprites/m_block_pink.png", BLOCK_HALF * basePoint, BLOCK_HALF);
             createBlock("./res/sprites/m_block_pink.png", BLOCK_HALF * basePoint, BLOCK_HALF * 3);
             createBlock("./res/sprites/m_block_pink.png", BLOCK_HALF * basePoint, BLOCK_HALF * 5);
             createBlock("./res/sprites/m_block_pink.png", BLOCK_HALF * (basePoint + 2), BLOCK_HALF * 5);
+            pivotBlock = allBlocks[allBlocks.length - 2];
             break;
         case 5:
             createBlock("./res/sprites/m_block_tangerine.png", BLOCK_HALF * (basePoint + 2), BLOCK_HALF);
             createBlock("./res/sprites/m_block_tangerine.png", BLOCK_HALF * (basePoint + 2), BLOCK_HALF * 3);
             createBlock("./res/sprites/m_block_tangerine.png", BLOCK_HALF * (basePoint + 2), BLOCK_HALF * 5);
             createBlock("./res/sprites/m_block_tangerine.png", BLOCK_HALF * basePoint, BLOCK_HALF * 5);
+            pivotBlock = allBlocks[allBlocks.length - 3];
             break;
         default:
             createBlock("./res/sprites/m_block_red.png", BLOCK_HALF * basePoint, BLOCK_HALF);
@@ -100,6 +107,40 @@ function getBottomTetro(){
     }
     //bottomBlock.sprite.alpha = 0.5;
     return bottomBlock;
+}
+
+// rotate currently falling tetro 90 degrees to the right
+function rotateTetro(){
+    if(pivotBlock == undefined){
+        return
+    }
+    var xOffset = pivotBlock.sprite.position.x;
+    var yOffset = pivotBlock.sprite.position.y;
+
+    // apply offset to all tetro blocks
+    // so pivot is at (0, 0)
+    for(var i = 1; i < 5; i++){
+        allBlocks[allBlocks.length - i].sprite.position.x -= xOffset;
+        allBlocks[allBlocks.length - i].sprite.position.y -= yOffset;
+    }
+
+    // apply rotation algorithm
+    for(var i = 1; i < 5; i++){
+        var x = allBlocks[allBlocks.length - i].sprite.position.x;
+        var y = allBlocks[allBlocks.length - i].sprite.position.y;
+        allBlocks[allBlocks.length - i].sprite.position.x = (x * Math.cos(Math.PI / 2) - y * Math.sin(Math.PI / 2));
+        allBlocks[allBlocks.length - i].sprite.position.y = (x * Math.sin(Math.PI / 2) + y * Math.cos(Math.PI / 2));
+    }
+
+    // re-apply offsets to bring block
+    // back where it should be
+    for(var i = 1; i < 5; i++){
+        allBlocks[allBlocks.length - i].sprite.position.x += xOffset;
+        allBlocks[allBlocks.length - i].sprite.position.y += yOffset;
+    }
+
+    HighlightBlocksBelow();
+
 }
 
 // create first tetromino

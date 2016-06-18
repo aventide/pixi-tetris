@@ -8,7 +8,7 @@ document.onkeydown = function(e) {
             break;
         // up arrow
         case 38:
-
+            rotateTetro();
             break;
         // right arrow
         case 39:
