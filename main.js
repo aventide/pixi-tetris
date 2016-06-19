@@ -18,7 +18,7 @@ function createBlock(image, posX, posY) {
 // https://en.wikipedia.org/wiki/Tetromino
 // return shape number in case we need it later
 function createTetro(){
-    var shape = Math.round(Math.random() * 6);
+    var shape = Math.round(Math.random() * 7);
     var basePoint = ((Math.round(Math.random() * 10) * 2) + 1);
     pivotBlock = undefined;
     switch(shape){
@@ -61,6 +61,13 @@ function createTetro(){
             createBlock("./res/sprites/m_block_tangerine.png", BLOCK_HALF * (basePoint + 2), BLOCK_HALF * 3);
             createBlock("./res/sprites/m_block_tangerine.png", BLOCK_HALF * (basePoint + 2), BLOCK_HALF * 5);
             createBlock("./res/sprites/m_block_tangerine.png", BLOCK_HALF * basePoint, BLOCK_HALF * 5);
+            pivotBlock = allBlocks[allBlocks.length - 3];
+            break;
+        case 6:
+            createBlock("./res/sprites/m_block_purple.png", BLOCK_HALF * basePoint, BLOCK_HALF);
+            createBlock("./res/sprites/m_block_purple.png", BLOCK_HALF * basePoint, BLOCK_HALF * 3);
+            createBlock("./res/sprites/m_block_purple.png", BLOCK_HALF * basePoint, BLOCK_HALF * 5);
+            createBlock("./res/sprites/m_block_purple.png", BLOCK_HALF * (basePoint + 2), BLOCK_HALF * 3);
             pivotBlock = allBlocks[allBlocks.length - 3];
             break;
         default:
