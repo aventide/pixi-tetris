@@ -5,6 +5,7 @@
 var allBlocks = [];
 var blockCount = 0;
 var pivotBlock = undefined;
+var defaultDropSpeed = 2;
 
 function createBlock(image, posX, posY) {
     allBlocks.push(new TBlock(image, posX, posY));
@@ -18,6 +19,8 @@ function createBlock(image, posX, posY) {
 // https://en.wikipedia.org/wiki/Tetromino
 // return shape number in case we need it later
 function createTetro(){
+    // return drop speed to normal if altered for instant drop
+    defaultDropSpeed = INITIAL_DROPSPEED;
     var shape = Math.round(Math.random() * 7);
     var basePoint = ((Math.round(Math.random() * 10) * 2) + 1);
     pivotBlock = undefined;
@@ -176,7 +179,6 @@ function animate() {
     renderer.render(stage);
 
     var validMove = false;
-    var defaultDropSpeed = 2;
     var dy = 0;
     var hasBlocksBelow = false;
 

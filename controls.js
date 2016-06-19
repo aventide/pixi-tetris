@@ -18,6 +18,9 @@ document.onkeydown = function(e) {
         case 40:
             moveTetroDown();
             break;
+        // spacebar
+        case 32:
+            instantDown();
 
         default: return; // exit this handler for other keys
     }
@@ -85,4 +88,8 @@ function moveTetroDown(){
             allBlocks[allBlocks.length - i].sprite.position.y += BLOCK_SIZE;
         }
     }
+}
+
+function instantDown(){
+    defaultDropSpeed = 1000;
 }
