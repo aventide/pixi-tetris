@@ -134,6 +134,28 @@ function TBlock(image, posX, posY) {
 		}
 	}
 
+	this.getDirectBlockLeft = function () {
+
+		for (var i = 0; i < allBlocks.length - 4; i++) {
+			if ((allBlocks[i].sprite.position.y == this.sprite.position.y) &&
+				(allBlocks[i].sprite.position.x == this.sprite.position.x - BLOCK_SIZE)) {
+				return allBlocks[i];
+			}
+		}
+
+	}
+
+	this.getDirectBlockRight = function () {
+
+		for (var i = 0; i < allBlocks.length - 4; i++) {
+			if ((allBlocks[i].sprite.position.y == this.sprite.position.y) &&
+				(allBlocks[i].sprite.position.x == this.sprite.position.x + BLOCK_SIZE)) {
+				return allBlocks[i];
+			}
+		}
+
+	}
+
 	// --------------------------
 	// end neighbor block methods
 

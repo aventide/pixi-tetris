@@ -92,21 +92,39 @@ function HighlightBlocksBelow(){
 // get the bottom block of a tetromino
 // effectively, this is the block closest to
 // another block below
+// right now, not intended to handle empty space below
+// needs to find bottom block closest to block below OR
+// empty space below
 function getBottomTetro(){
 
     var bottomBlock = allBlocks[allBlocks.length - 1];
+    var shortDist = Infinity;
 
-    for(var i = 2; i < 5; i++){
-        if(allBlocks[allBlocks.length - i].getNearestBlockBelow() == undefined){
-            continue;
+    for(var i = 1; i < 5; i++){
+        // has blocks below
+        if(allBlocks[allBlocks.length - i].getNearestBlockBelow() != undefined){
+            var yDist = allBlocks[allBlocks.length - i].getNearestBlockBelow().sprite.position.y - allBlocks[allBlocks.length - i].sprite.position.y - BLOCK_SIZE;
+            if(yDist < shortDist){
+                shortDist = yDist;
+                bottomBlock = allBlocks[allBlocks.length - i];
+            }
         }
-        var yDist = allBlocks[allBlocks.length - i].getNearestBlockBelow().sprite.position.y - allBlocks[allBlocks.length - i].sprite.position.y;
-        if(bottomBlock.getNearestBlockBelow() == undefined || yDist < bottomBlock.getNearestBlockBelow().sprite.position.y - bottomBlock.sprite.position.y){
-            bottomBlock = allBlocks[allBlocks.length - i];
+        // only empty space below
+        else{
+            var yDist = RENDERER_Y - allBlocks[allBlocks.length - i].sprite.position.y - BLOCK_HALF;
+            if(yDist < shortDist){
+                shortDist = yDist;
+                bottomBlock = allBlocks[allBlocks.length - i];
+            }
         }
     }
-    //bottomBlock.sprite.alpha = 0.5;
+
+    for(var i = 1; i < 5; i++){
+        allBlocks[allBlocks.length - i].sprite.alpha = 1;
+    }
+    bottomBlock.sprite.alpha = 0.5;
     return bottomBlock;
+
 }
 
 // rotate currently falling tetro 90 degrees to the right
@@ -163,7 +181,7 @@ function animate() {
     }
 
     // there are blocks below to collide with
-    if(hasBlocksBelow){
+    if(getBottomTetro().getNearestBlockBelow() != undefined){
         // determine if tetro can move down without intersecting another block
 
         // distance between bottom block of tetro and its block below

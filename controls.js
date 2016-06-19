@@ -28,8 +28,10 @@ function moveTetroLeft(){
     var validMove = false;
     for (var i = 1; i < 5; i++) {
         //make sure to not go over the left edge
-        if((allBlocks[blockCount - i].sprite.position.x - BLOCK_SIZE) >= BLOCK_HALF){
-            validMove = true;
+        if((allBlocks[allBlocks.length - i].sprite.position.x - BLOCK_SIZE) >= BLOCK_HALF){
+            if(allBlocks[allBlocks.length - i].getDirectBlockLeft() == undefined){
+                validMove = true;
+            }
         }
         else{
             validMove = false;
@@ -38,7 +40,7 @@ function moveTetroLeft(){
     }
     if (validMove){
         for (var i = 1; i < 5; i++) {
-            allBlocks[blockCount - i].sprite.position.x -= BLOCK_SIZE;
+            allBlocks[allBlocks.length - i].sprite.position.x -= BLOCK_SIZE;
         }
         HighlightBlocksBelow();
     }
@@ -48,8 +50,10 @@ function moveTetroRight(){
     var validMove = false;
     for (var i = 1; i < 5; i++) {
         //make sure to not go over the right edge
-        if((allBlocks[blockCount - i].sprite.position.x + BLOCK_SIZE) <= RENDERER_X - BLOCK_HALF){
-            validMove = true;
+        if((allBlocks[allBlocks.length - i].sprite.position.x + BLOCK_SIZE) <= RENDERER_X - BLOCK_HALF){
+            if(allBlocks[allBlocks.length - i].getDirectBlockRight() == undefined){
+                validMove = true;
+            }
         }
         else{
             validMove = false;
@@ -58,7 +62,7 @@ function moveTetroRight(){
     }
     if (validMove){
         for (var i = 1; i < 5; i++) {
-            allBlocks[blockCount - i].sprite.position.x += BLOCK_SIZE;
+            allBlocks[allBlocks.length - i].sprite.position.x += BLOCK_SIZE;
         }
         HighlightBlocksBelow();
     }
@@ -68,7 +72,7 @@ function moveTetroDown(){
     var validMove = false;
     for (var i = 1; i < 5; i++) {
         //make sure to not go over the bottom edge
-        if(allBlocks[blockCount - i].sprite.position.y + BLOCK_SIZE <= (RENDERER_Y - BLOCK_HALF)){
+        if(allBlocks[allBlocks.length - i].sprite.position.y + BLOCK_SIZE <= (RENDERER_Y - BLOCK_HALF)){
             validMove = true;
         }
         else{
@@ -78,7 +82,7 @@ function moveTetroDown(){
     }
     if (validMove){
         for (var i = 1; i < 5; i++) {
-            allBlocks[blockCount - i].sprite.position.y += BLOCK_SIZE;
+            allBlocks[allBlocks.length - i].sprite.position.y += BLOCK_SIZE;
         }
     }
 }
