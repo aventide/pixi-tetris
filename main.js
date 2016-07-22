@@ -129,10 +129,11 @@ function getBottomTetro(){
         }
     }
 
-    for(var i = 1; i < 5; i++){
+    /*for(var i = 1; i < 5; i++){
         allBlocks[allBlocks.length - i].sprite.alpha = 1;
     }
-    bottomBlock.sprite.alpha = 0.5;
+    bottomBlock.sprite.alpha = 0.5;*/
+    
     return bottomBlock;
 
 }

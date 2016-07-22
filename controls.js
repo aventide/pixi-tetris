@@ -32,8 +32,12 @@ function moveTetroLeft(){
     for (var i = 1; i < 5; i++) {
         //make sure to not go over the left edge
         if((allBlocks[allBlocks.length - i].sprite.position.x - BLOCK_SIZE) >= BLOCK_HALF){
-            if(allBlocks[allBlocks.length - i].getDirectBlockLeft() == undefined){
+            if(allBlocks[allBlocks.length - i].getDirectBlocksLeft().length == 0){
                 validMove = true;
+            }
+            else{
+                validMove = false;
+                break;
             }
         }
         else{
@@ -54,8 +58,12 @@ function moveTetroRight(){
     for (var i = 1; i < 5; i++) {
         //make sure to not go over the right edge
         if((allBlocks[allBlocks.length - i].sprite.position.x + BLOCK_SIZE) <= RENDERER_X - BLOCK_HALF){
-            if(allBlocks[allBlocks.length - i].getDirectBlockRight() == undefined){
+            if(allBlocks[allBlocks.length - i].getDirectBlocksRight().length == 0){
                 validMove = true;
+            }
+            else{
+                validMove = false;
+                break;
             }
         }
         else{
