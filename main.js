@@ -18,13 +18,13 @@ function createBlock(image, posX, posY) {
 // create a random tetromino
 // https://en.wikipedia.org/wiki/Tetromino
 // return shape number in case we need it later
-function createTetro(){
+function createTetro() {
     // return drop speed to normal if altered for instant drop
     defaultDropSpeed = INITIAL_DROPSPEED;
     var shape = Math.round(Math.random() * 7);
     var basePoint = ((Math.round(Math.random() * 10) * 2) + 1);
     pivotBlock = undefined;
-    switch(shape){
+    switch (shape) {
         case 0:
             createBlock("./res/sprites/m_block_red.png", BLOCK_HALF * basePoint, BLOCK_HALF);
             createBlock("./res/sprites/m_block_red.png", BLOCK_HALF * (basePoint + 2), BLOCK_HALF);
@@ -83,16 +83,16 @@ function createTetro(){
     return shape;
 }
 
-function HighlightBlocksBelow(){
+function HighlightBlocksBelow() {
 
     // un highlight previously highlighted blocks
-    for(var i = 0; i < allBlocks.length - 4; i++){
+    for (var i = 0; i < allBlocks.length - 4; i++) {
         allBlocks[i].sprite.alpha = 1;
     }
 
     // highlight blocks below active tetro
-    for(var i = 1; i < 5; i++){
-        if(allBlocks[allBlocks.length - i].getNearestBlockBelow() == undefined){
+    for (var i = 1; i < 5; i++) {
+        if (allBlocks[allBlocks.length - i].getNearestBlockBelow() == undefined) {
             continue;
         }
         allBlocks[allBlocks.length - i].getNearestBlockBelow().sprite.alpha = 0.5;
@@ -105,24 +105,24 @@ function HighlightBlocksBelow(){
 // right now, not intended to handle empty space below
 // needs to find bottom block closest to block below OR
 // empty space below
-function getBottomTetro(){
+function getBottomTetro() {
 
     var bottomBlock = allBlocks[allBlocks.length - 1];
     var shortDist = Infinity;
 
-    for(var i = 1; i < 5; i++){
+    for (var i = 1; i < 5; i++) {
         // has blocks below
-        if(allBlocks[allBlocks.length - i].getNearestBlockBelow() != undefined){
+        if (allBlocks[allBlocks.length - i].getNearestBlockBelow() != undefined) {
             var yDist = allBlocks[allBlocks.length - i].getNearestBlockBelow().sprite.position.y - allBlocks[allBlocks.length - i].sprite.position.y - BLOCK_SIZE;
-            if(yDist < shortDist){
+            if (yDist < shortDist) {
                 shortDist = yDist;
                 bottomBlock = allBlocks[allBlocks.length - i];
             }
         }
         // only empty space below
-        else{
+        else {
             var yDist = RENDERER_Y - allBlocks[allBlocks.length - i].sprite.position.y - BLOCK_HALF;
-            if(yDist < shortDist){
+            if (yDist < shortDist) {
                 shortDist = yDist;
                 bottomBlock = allBlocks[allBlocks.length - i];
             }
@@ -130,17 +130,17 @@ function getBottomTetro(){
     }
 
     /*for(var i = 1; i < 5; i++){
-        allBlocks[allBlocks.length - i].sprite.alpha = 1;
-    }
-    bottomBlock.sprite.alpha = 0.5;*/
-    
+     allBlocks[allBlocks.length - i].sprite.alpha = 1;
+     }
+     bottomBlock.sprite.alpha = 0.5;*/
+
     return bottomBlock;
 
 }
 
 // rotate currently falling tetro 90 degrees to the right
-function rotateTetro(){
-    if(pivotBlock == undefined){
+function rotateTetro() {
+    if (pivotBlock == undefined) {
         return
     }
     var xOffset = pivotBlock.sprite.position.x;
@@ -148,13 +148,13 @@ function rotateTetro(){
 
     // apply offset to all tetro blocks
     // so pivot is at (0, 0)
-    for(var i = 1; i < 5; i++){
+    for (var i = 1; i < 5; i++) {
         allBlocks[allBlocks.length - i].sprite.position.x -= xOffset;
         allBlocks[allBlocks.length - i].sprite.position.y -= yOffset;
     }
 
     // apply rotation algorithm
-    for(var i = 1; i < 5; i++){
+    for (var i = 1; i < 5; i++) {
         var x = allBlocks[allBlocks.length - i].sprite.position.x;
         var y = allBlocks[allBlocks.length - i].sprite.position.y;
         allBlocks[allBlocks.length - i].sprite.position.x = (x * Math.cos(Math.PI / 2) - y * Math.sin(Math.PI / 2));
@@ -163,7 +163,7 @@ function rotateTetro(){
 
     // re-apply offsets to bring block
     // back where it should be
-    for(var i = 1; i < 5; i++){
+    for (var i = 1; i < 5; i++) {
         allBlocks[allBlocks.length - i].sprite.position.x += xOffset;
         allBlocks[allBlocks.length - i].sprite.position.y += yOffset;
     }
@@ -175,7 +175,7 @@ function rotateTetro(){
 // create first tetromino
 createTetro();
 function animate() {
-    
+
     // render the stage
     renderer.render(stage);
 
@@ -183,57 +183,64 @@ function animate() {
     var dy = 0;
     var hasBlocksBelow = false;
 
-    for(var i = 1; i < 5; i++){
-        if(allBlocks[allBlocks.length - i].getNearestBlockBelow() != undefined){
+    for (var i = 1; i < 5; i++) {
+        if (allBlocks[allBlocks.length - i].getNearestBlockBelow() != undefined) {
             hasBlocksBelow = true;
             break;
         }
     }
 
     // there are blocks below to collide with
-    if(getBottomTetro().getNearestBlockBelow() != undefined){
+    if (getBottomTetro().getNearestBlockBelow() != undefined) {
         // determine if tetro can move down without intersecting another block
 
         // distance between bottom block of tetro and its block below
         var yDist = (getBottomTetro().getNearestBlockBelow().sprite.position.y - getBottomTetro().sprite.position.y) - BLOCK_SIZE;
-        if(yDist > defaultDropSpeed){
+        if (yDist > defaultDropSpeed) {
             dy = defaultDropSpeed;
             validMove = true;
         }
-        else if(yDist != 0){
+        else if (yDist != 0) {
             dy = yDist;
             validMove = true;
         }
-        else{
+        else {
             validMove = false;
         }
     }
     // there is empty space below to collide with
-    else if(RENDERER_Y - (getBottomTetro().sprite.position.y + BLOCK_HALF) > 0){
+    else if (RENDERER_Y - (getBottomTetro().sprite.position.y + BLOCK_HALF) > 0) {
         // determine if tetro can move down without violating bottom
-        if(RENDERER_Y - (getBottomTetro().sprite.position.y + BLOCK_HALF) >= defaultDropSpeed){
+        if (RENDERER_Y - (getBottomTetro().sprite.position.y + BLOCK_HALF) >= defaultDropSpeed) {
             dy = defaultDropSpeed;
         }
-        else{
+        else {
             dy = (RENDERER_Y - BLOCK_HALF) - getBottomTetro().sprite.position.y;
         }
         validMove = true;
     }
     // any other conditions are absolutely haram
-    else{
+    else {
         validMove = false;
     }
 
     // if no violation, move all 4 blocks in tetro downwards by dy
-    if(validMove){
-        for(var i = 1; i < 5; i++){
+    if (validMove) {
+        for (var i = 1; i < 5; i++) {
             allBlocks[blockCount - i].sprite.position.y += dy;
         }
     }
     // if violation occurred, it's done moving; make a new tetro up top
-    else{
-        createTetro();
-        HighlightBlocksBelow();
+    else {
+        // set delay of 12ms to allow player to move left or right
+        // at the last moment, because I'm not a dick
+        // IF THIS DOESN'T END UP WORKING FOR ALL MACHINES,
+        // TRY CHECKING FOR LEFT/RIGHT KEYPRESS AROUND THIS
+        // POINT FOR DELAY-LESS COVERING OF THE ISSUE
+        setTimeout(function () {
+            createTetro();
+            HighlightBlocksBelow();
+        }, 12);
     }
 
     requestAnimationFrame(animate)
