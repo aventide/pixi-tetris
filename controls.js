@@ -82,8 +82,20 @@ function moveTetroRight(){
 function moveTetroDown(){
     var validMove = false;
     for (var i = 1; i < 5; i++) {
+
+        // don't smash into blocks below
+        if(allBlocks[allBlocks.length - i].getNearestBlockBelow() != undefined) {
+            if (allBlocks[allBlocks.length - i].getNearestBlockBelow().sprite.position.y -
+                allBlocks[allBlocks.length - i].sprite.position.y >= BLOCK_SIZE) {
+                validMove = true;
+            }
+            else{
+                validMove = false;
+                break;
+            }
+        }
         //make sure to not go over the bottom edge
-        if(allBlocks[allBlocks.length - i].sprite.position.y + BLOCK_SIZE <= (RENDERER_Y - BLOCK_HALF)){
+        else if(allBlocks[allBlocks.length - i].sprite.position.y + BLOCK_SIZE <= (RENDERER_Y - BLOCK_HALF)){
             validMove = true;
         }
         else{

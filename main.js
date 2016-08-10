@@ -7,12 +7,29 @@ var blockCount = 0;
 var pivotBlock = undefined;
 var defaultDropSpeed = 2;
 
+// create and return a TBlock object
+// with all of its simple glory
 function createBlock(image, posX, posY) {
     allBlocks.push(new TBlock(image, posX, posY));
     allBlocks[allBlocks.length - 1].id = "b" + blockCount;
     stage.addChild(allBlocks[allBlocks.length - 1].sprite);
     blockCount++;
     return blockCount;
+}
+
+// determine if there could be
+// and intersection if a block was
+// placed at this position
+// ignoring active tetro blocks
+function isIntersectingBlock(x, y) {
+    //console.log("x: " + x + "\ny: " + y);
+    for (var i = 0; i < allBlocks.length - 4; i++) {
+        if (allBlocks[i].sprite.position.x == x &&
+            Math.abs(allBlocks[i].sprite.position.y - y) <= BLOCK_SIZE) {
+            return true;
+        }
+    }
+    return false;
 }
 
 // create a random tetromino
@@ -129,10 +146,10 @@ function getBottomTetro() {
         }
     }
 
-    /*for(var i = 1; i < 5; i++){
+    for(var i = 1; i < 5; i++){
      allBlocks[allBlocks.length - i].sprite.alpha = 1;
      }
-     bottomBlock.sprite.alpha = 0.5;*/
+     bottomBlock.sprite.alpha = 0.5;
 
     return bottomBlock;
 
@@ -143,29 +160,51 @@ function rotateTetro() {
     if (pivotBlock == undefined) {
         return
     }
+
+    var xTemp = [];
+    var yTemp = [];
+    for (var i = 1; i < 5; i++) {
+        xTemp[i - 1] = allBlocks[allBlocks.length - i].sprite.position.x
+        yTemp[i - 1] = allBlocks[allBlocks.length - i].sprite.position.y;
+    }
+
     var xOffset = pivotBlock.sprite.position.x;
     var yOffset = pivotBlock.sprite.position.y;
 
     // apply offset to all tetro blocks
     // so pivot is at (0, 0)
-    for (var i = 1; i < 5; i++) {
-        allBlocks[allBlocks.length - i].sprite.position.x -= xOffset;
-        allBlocks[allBlocks.length - i].sprite.position.y -= yOffset;
+    for (var i = 0; i < 4; i++) {
+        xTemp[i] -= xOffset;
+        yTemp[i] -= yOffset;
     }
 
     // apply rotation algorithm
-    for (var i = 1; i < 5; i++) {
-        var x = allBlocks[allBlocks.length - i].sprite.position.x;
-        var y = allBlocks[allBlocks.length - i].sprite.position.y;
-        allBlocks[allBlocks.length - i].sprite.position.x = (x * Math.cos(Math.PI / 2) - y * Math.sin(Math.PI / 2));
-        allBlocks[allBlocks.length - i].sprite.position.y = (x * Math.sin(Math.PI / 2) + y * Math.cos(Math.PI / 2));
+    for (var i = 0; i < 4; i++) {
+        var x = xTemp[i];
+        var y = yTemp[i];
+        xTemp[i] = (x * Math.cos(Math.PI / 2) - y * Math.sin(Math.PI / 2));
+        yTemp[i] = (x * Math.sin(Math.PI / 2) + y * Math.cos(Math.PI / 2));
     }
 
     // re-apply offsets to bring block
     // back where it should be
+    for (var i = 0; i < 4; i++) {
+        xTemp[i] += xOffset;
+        yTemp[i] += yOffset;
+    }
+
+    // loop through new positions after rotation
+    // to check validity
+    // stop function if not
+    for (var i = 0; i < 4; i++) {
+        if (isIntersectingBlock(xTemp[i], yTemp[i]) || xTemp[i] < BLOCK_HALF || xTemp[i] > RENDERER_X - BLOCK_HALF) {
+            return
+        }
+    }
+
     for (var i = 1; i < 5; i++) {
-        allBlocks[allBlocks.length - i].sprite.position.x += xOffset;
-        allBlocks[allBlocks.length - i].sprite.position.y += yOffset;
+        allBlocks[allBlocks.length - i].sprite.position.x = xTemp[i - 1];
+        allBlocks[allBlocks.length - i].sprite.position.y = yTemp[i - 1];
     }
 
     HighlightBlocksBelow();
@@ -237,10 +276,12 @@ function animate() {
         // IF THIS DOESN'T END UP WORKING FOR ALL MACHINES,
         // TRY CHECKING FOR LEFT/RIGHT KEYPRESS AROUND THIS
         // POINT FOR DELAY-LESS COVERING OF THE ISSUE
-        setTimeout(function () {
-            createTetro();
-            HighlightBlocksBelow();
-        }, 12);
+        // setTimeout(function () {
+        //     createTetro();
+        //     HighlightBlocksBelow();
+        // }, 12);
+        createTetro();
+        HighlightBlocksBelow();
     }
 
     requestAnimationFrame(animate)
