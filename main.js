@@ -17,6 +17,17 @@ function createBlock(image, posX, posY) {
     return blockCount;
 }
 
+// return block located at the
+// given coordinate, if it exists
+function getBlockAt(x, y){
+    for(var i = 0; i < allBlocks.length - 4; i++){
+        if(allBlocks[i].sprite.position.x == x &&
+        allBlocks[i].sprite.position.y == y){
+            return allBlocks[i];
+        }
+    }
+}
+
 // determine if there could be
 // and intersection if a block was
 // placed at this position
@@ -202,6 +213,8 @@ function rotateTetro() {
         }
     }
 
+    //@todo make it so the pivot block changes when tetro is in violation?
+    
     for (var i = 1; i < 5; i++) {
         allBlocks[allBlocks.length - i].sprite.position.x = xTemp[i - 1];
         allBlocks[allBlocks.length - i].sprite.position.y = yTemp[i - 1];
@@ -284,7 +297,41 @@ function animate() {
         HighlightBlocksBelow();
     }
 
-    requestAnimationFrame(animate)
+    // check to see if a row has been completed
+    // at the moment, this means 12 adjacent
+    // blocks horizontally
 
+    // loop through each row, index by block center point
+    /*
+    for(var i = RENDERER_Y - BLOCK_HALF; i >= BLOCK_HALF; i -= BLOCK_SIZE){
+        // loop through each block in the row
+        // add up number of blocks
+
+        var BlocksInRow = 0;
+
+        for(var j = BLOCK_HALF; j <= RENDERER_X - BLOCK_HALF; j += BLOCK_SIZE){
+            if(getBlockAt(i, j) != undefined){
+                BlocksInRow++;
+            }
+        }
+
+        // if number of blocks in the row is equal to the
+        // max holding capacity of the row, row is ready to erase
+        //@todo dynamic number of blocks in row
+        if(BlocksInRow == 12) {
+            console.log("maxed out row: " + i);
+            for (var j = BLOCK_HALF; j <= RENDERER_X - BLOCK_HALF; j += BLOCK_SIZE) {
+                if (getBlockAt(i, j) != undefined) {
+                    getBlockAt(i, j).changeType("./res/sprites/m_block_green.png");
+                    stage.removeChild(getBlockAt(i, j).sprite);
+                    allBlocks.splice(allBlocks[allBlocks.indexOf(getBlockAt(i, j))], 1);
+                }
+            }
+        }
+    }
+
+    */
+
+    requestAnimationFrame(animate)
 
 }
