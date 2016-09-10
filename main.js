@@ -284,6 +284,7 @@ function animate() {
     }
     // if violation occurred, it's done moving; make a new tetro up top
     else {
+        // @todo
         // set delay of 12ms to allow player to move left or right
         // at the last moment, because I'm not a dick
         // IF THIS DOESN'T END UP WORKING FOR ALL MACHINES,
@@ -297,40 +298,28 @@ function animate() {
         HighlightBlocksBelow();
     }
 
-    // check to see if a row has been completed
-    // at the moment, this means 12 adjacent
-    // blocks horizontally
+    // check to see if bottom row is all blocks.  this
+    // is a test for future development
 
-    // loop through each row, index by block center point
-    /*
-    for(var i = RENDERER_Y - BLOCK_HALF; i >= BLOCK_HALF; i -= BLOCK_SIZE){
-        // loop through each block in the row
-        // add up number of blocks
-
-        var BlocksInRow = 0;
-
-        for(var j = BLOCK_HALF; j <= RENDERER_X - BLOCK_HALF; j += BLOCK_SIZE){
-            if(getBlockAt(i, j) != undefined){
-                BlocksInRow++;
-            }
+    var completeRow = false;
+    for(var i = BLOCK_HALF; i < RENDERER_X; i += BLOCK_SIZE){
+        if(getBlockAt(i, RENDERER_Y - BLOCK_HALF) != undefined){
+            completeRow = true;
         }
-
-        // if number of blocks in the row is equal to the
-        // max holding capacity of the row, row is ready to erase
-        //@todo dynamic number of blocks in row
-        if(BlocksInRow == 12) {
-            console.log("maxed out row: " + i);
-            for (var j = BLOCK_HALF; j <= RENDERER_X - BLOCK_HALF; j += BLOCK_SIZE) {
-                if (getBlockAt(i, j) != undefined) {
-                    getBlockAt(i, j).changeType("./res/sprites/m_block_green.png");
-                    stage.removeChild(getBlockAt(i, j).sprite);
-                    allBlocks.splice(allBlocks[allBlocks.indexOf(getBlockAt(i, j))], 1);
-                }
-            }
+        else{
+            completeRow = false;
+            break;
         }
     }
 
-    */
+    if(completeRow){
+        console.log("Row " + "" + "completed.");
+        for(var i = BLOCK_HALF; i < RENDERER_X; i += BLOCK_SIZE){
+            stage.removeChild(getBlockAt(i, RENDERER_Y - BLOCK_HALF).sprite);
+            allBlocks.splice(allBlocks.indexOf(getBlockAt(i, RENDERER_Y - BLOCK_HALF)), 1);
+        }
+        blockCount -= ROW_SIZE;
+    }
 
     requestAnimationFrame(animate)
 

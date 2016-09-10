@@ -116,19 +116,6 @@ function TBlock(image, posX, posY) {
         return nearestBlock;
     }
 
-    this.hasIntersectingBlock = function () {
-        for (var i = 0; i < allBlocks.length - 4; i++) {
-            if (
-                (allBlocks[i].sprite.position.x > this.sprite.position.x - BLOCK_SIZE &&
-                allBlocks[i].sprite.position.x < this.sprite.position.x + BLOCK_SIZE) &&
-                (allBlocks[i].sprite.position.y > this.sprite.position.y - BLOCK_SIZE &&
-                allBlocks[i].sprite.position.y < this.sprite.position.y + BLOCK_SIZE)
-            ) {
-                return true;
-            }
-        }
-    }
-
     // --------------------------
     // end neighbor block methods
 
@@ -138,32 +125,6 @@ function TBlock(image, posX, posY) {
     this.changeType = function (blockImage) {
         this.sprite.texture = PIXI.Texture.fromImage(blockImage);
         this.type = blockImage;
-    }
-
-    this.setRandomType = function () {
-        var randBlock = "";
-        switch (Math.round(Math.random() * 4)) {
-            case 0:
-                randBlock = "./res/sprites/m_block_red.png";
-                break;
-            case 1:
-                randBlock = "./res/sprites/m_block_tangerine.png";
-                break;
-            case 2:
-                randBlock = "./res/sprites/m_block_green.png";
-                break;
-            case 3:
-                randBlock = "./res/sprites/m_block_blue.png";
-                break;
-            case 4:
-                randBlock = "./res/sprites/m_block_purple.png";
-                break;
-            default:
-                randBlock = "./res/sprites/m_block_red.png";
-                break;
-        }
-        this.sprite.texture = PIXI.Texture.fromImage(randBlock);
-        this.type = randBlock;
     }
 
     // --------------------------

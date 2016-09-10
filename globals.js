@@ -1,5 +1,6 @@
 var BLOCK_SIZE = 50,
     BLOCK_HALF = 25,
+    ROW_SIZE = 12,
     RENDERER_X = 600,
     RENDERER_Y = 800,
     RENDERER_COLOR = 0xA9A9A9;
