@@ -301,24 +301,38 @@ function animate() {
     // check to see if bottom row is all blocks.  this
     // is a test for future development
 
-    var completeRow = false;
-    for(var i = BLOCK_HALF; i < RENDERER_X; i += BLOCK_SIZE){
-        if(getBlockAt(i, RENDERER_Y - BLOCK_HALF) != undefined){
-            completeRow = true;
-        }
-        else{
-            completeRow = false;
-            break;
-        }
-    }
+    // each row
+    for(var h = BLOCK_HALF; h < RENDERER_Y; h += BLOCK_SIZE) {
 
-    if(completeRow){
-        console.log("Row " + "" + "completed.");
-        for(var i = BLOCK_HALF; i < RENDERER_X; i += BLOCK_SIZE){
-            stage.removeChild(getBlockAt(i, RENDERER_Y - BLOCK_HALF).sprite);
-            allBlocks.splice(allBlocks.indexOf(getBlockAt(i, RENDERER_Y - BLOCK_HALF)), 1);
+        var completeRow = false;
+
+        for (var i = BLOCK_HALF; i < RENDERER_X; i += BLOCK_SIZE) {
+            if (getBlockAt(i, h) != undefined) {
+                completeRow = true;
+            }
+            else {
+                completeRow = false;
+                break;
+            }
         }
-        blockCount -= ROW_SIZE;
+
+        if (completeRow) {
+            console.log("Row " + "" + "completed.");
+            for (var i = BLOCK_HALF; i < RENDERER_X; i += BLOCK_SIZE) {
+                stage.removeChild(getBlockAt(i, h).sprite);
+                allBlocks.splice(allBlocks.indexOf(getBlockAt(i, h)), 1);
+            }
+            blockCount -= ROW_SIZE;
+
+            for (var i = 0; i < allBlocks.length - 4; i++) {
+                // lower all blocks above the cleared row by 1 row
+                if (allBlocks[i].sprite.position.y < RENDERER_Y - BLOCK_HALF) {
+                    allBlocks[i].sprite.position.y += BLOCK_SIZE;
+                }
+            }
+
+        }
+
     }
 
     requestAnimationFrame(animate)
