@@ -298,14 +298,15 @@ function animate() {
         HighlightBlocksBelow();
     }
 
-    // check to see if bottom row is all blocks.  this
-    // is a test for future development
+    // scan each row on canvas for complete rows of tetrominos
+    // and clear the row if condition is met
 
-    // each row
+    // iterate by row
     for(var h = BLOCK_HALF; h < RENDERER_Y; h += BLOCK_SIZE) {
 
         var completeRow = false;
 
+        // iterate by column in row
         for (var i = BLOCK_HALF; i < RENDERER_X; i += BLOCK_SIZE) {
             if (getBlockAt(i, h) != undefined) {
                 completeRow = true;
@@ -316,6 +317,8 @@ function animate() {
             }
         }
 
+        // if row complete, remove all TBlocks and associated
+        // sprites for that row
         if (completeRow) {
             console.log("Row " + "" + "completed.");
             for (var i = BLOCK_HALF; i < RENDERER_X; i += BLOCK_SIZE) {
@@ -324,6 +327,8 @@ function animate() {
             }
             blockCount -= ROW_SIZE;
 
+            // after clearing row, bring all TBlocks above down by
+            // one block height, to simulate gravity
             for (var i = 0; i < allBlocks.length - 4; i++) {
                 // lower all blocks above the cleared row by 1 row
                 if (allBlocks[i].sprite.position.y < RENDERER_Y - BLOCK_HALF) {
