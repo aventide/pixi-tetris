@@ -331,7 +331,7 @@ function animate() {
             // one block height, to simulate gravity
             for (var i = 0; i < allBlocks.length - 4; i++) {
                 // lower all blocks above the cleared row by 1 row
-                if (allBlocks[i].sprite.position.y < RENDERER_Y - BLOCK_HALF) {
+                if (allBlocks[i].sprite.position.y < h) {
                     allBlocks[i].sprite.position.y += BLOCK_SIZE;
                 }
             }

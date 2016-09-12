@@ -1,16 +1,23 @@
 <html>
 
+<!-- @todo change div ids away from 'ai' etc-->
 <head>
     <title>WebGL Tetris</title>
     <meta content="">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="./style.css">
     <script src="./pixi.js/bin/pixi.js"></script>
 	<script src="./globals.js"></script>
 </head>
 
 <body>
-    <div id="ai-header"></div>
+    <div id="ai-header">
+        <h4 style="text-align: center; font-family: 'roboto';">Last updated: 9/12/2016</h4>
+    </div>
     <div id="ai-center"></div>
+    <div id="ai-footer">
+        <h4 style="text-align: center; font-family: 'roboto';">Created by Alex Staples using Pixi.js</h4>
+    </div>
     <script src="./stage.js"></script>
     <script src="./controls.js"></script>
     <script src="./block.js"></script>
