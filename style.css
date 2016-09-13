@@ -12,15 +12,40 @@
             width: 100%;
             height: 50px;
         }
-        #ai-center {
-            width: 600px;
+
+        #ai-center-container{
+            width: 1000px;
             height: 800px;
             margin-left: auto;
             margin-right: auto;
+        }
+
+        #ai-center {
+            width: 600px;
+            height: 800px;
+            margin-left: 175px;
+            float: left;
             background-color: #A9A9A9;
             //padding: 14px;
             box-shadow: 0px 0px 12px 3px #000000;
             border-radius: 4px;
+        }
+
+        #ai-next-tetro{
+            width: 150px;
+            height: 150px;
+            margin-left: 25px;
+            float: left;
+            background-color: #A9A9A9;
+            box-shadow: 0px 0px 12px 3px #000000;
+            border-radius: 4px;
+        }
+
+        /* @todo fix proportions*/
+        #ai-next-tetro-image{
+            display: block;
+            margin: auto;
+            padding: 30px;
         }
 
         #ai-footer{

@@ -6,6 +6,7 @@ var allBlocks = [];
 var blockCount = 0;
 var pivotBlock = undefined;
 var defaultDropSpeed = 2;
+var nextTetro = 0;
 
 // create and return a TBlock object
 // with all of its simple glory
@@ -46,10 +47,11 @@ function isIntersectingBlock(x, y) {
 // create a random tetromino
 // https://en.wikipedia.org/wiki/Tetromino
 // return shape number in case we need it later
-function createTetro() {
+// @todo take shape as a parameter to enable pre-selection
+function createTetro(nextShape) {
     // return drop speed to normal if altered for instant drop
     defaultDropSpeed = INITIAL_DROPSPEED;
-    var shape = Math.round(Math.random() * 7);
+    var shape = nextShape;
     var basePoint = ((Math.round(Math.random() * 10) * 2) + 1);
     pivotBlock = undefined;
     switch (shape) {
@@ -111,20 +113,52 @@ function createTetro() {
     return shape;
 }
 
+function setNextTetroImage(nextTetro){
+    document.getElementById("ai-next-tetro-image").src
+
+    switch(nextTetro){
+        case 0:
+            document.getElementById("ai-next-tetro-image").src = "./res/next_tetro/red_next_tetro.png";
+            break;
+        case 1:
+            document.getElementById("ai-next-tetro-image").src = "./res/next_tetro/blue_next_tetro.png";
+            break;
+        case 2:
+            document.getElementById("ai-next-tetro-image").src = "./res/next_tetro/yellow_next_tetro.png";
+            break;
+        case 3:
+            document.getElementById("ai-next-tetro-image").src = "./res/next_tetro/green_next_tetro.png";
+            break;
+        case 4:
+            document.getElementById("ai-next-tetro-image").src = "./res/next_tetro/pink_next_tetro.png";
+            break;
+        case 5:
+            document.getElementById("ai-next-tetro-image").src = "./res/next_tetro/tangerine_next_tetro.png";
+            break;
+        case 6:
+            document.getElementById("ai-next-tetro-image").src = "./res/next_tetro/purple_next_tetro.png";
+            break;
+        default:
+            document.getElementById("ai-next-tetro-image").src = "./res/next_tetro/red_next_tetro.png";
+            break;
+
+    }
+}
+
 function HighlightBlocksBelow() {
 
     // un highlight previously highlighted blocks
-    for (var i = 0; i < allBlocks.length - 4; i++) {
-        allBlocks[i].sprite.alpha = 1;
-    }
+    // for (var i = 0; i < allBlocks.length - 4; i++) {
+    //     allBlocks[i].sprite.alpha = 1;
+    // }
 
     // highlight blocks below active tetro
-    for (var i = 1; i < 5; i++) {
-        if (allBlocks[allBlocks.length - i].getNearestBlockBelow() == undefined) {
-            continue;
-        }
-        allBlocks[allBlocks.length - i].getNearestBlockBelow().sprite.alpha = 0.5;
-    }
+    // for (var i = 1; i < 5; i++) {
+    //     if (allBlocks[allBlocks.length - i].getNearestBlockBelow() == undefined) {
+    //         continue;
+    //     }
+    //     allBlocks[allBlocks.length - i].getNearestBlockBelow().sprite.alpha = 0.5;
+    // }
 }
 
 // get the bottom block of a tetromino
@@ -157,10 +191,10 @@ function getBottomTetro() {
         }
     }
 
-    for(var i = 1; i < 5; i++){
-     allBlocks[allBlocks.length - i].sprite.alpha = 1;
-     }
-     bottomBlock.sprite.alpha = 0.5;
+    // for(var i = 1; i < 5; i++){
+    //  allBlocks[allBlocks.length - i].sprite.alpha = 1;
+    //  }
+    //  bottomBlock.sprite.alpha = 0.5;
 
     return bottomBlock;
 
@@ -225,7 +259,10 @@ function rotateTetro() {
 }
 
 // create first tetromino
-createTetro();
+createTetro(Math.round(Math.random() * 7));
+nextTetro = Math.round(Math.random() * 7);
+setNextTetroImage(nextTetro);
+
 function animate() {
 
     // render the stage
@@ -294,7 +331,11 @@ function animate() {
         //     createTetro();
         //     HighlightBlocksBelow();
         // }, 12);
-        createTetro();
+        createTetro(nextTetro);
+
+        nextTetro = Math.round(Math.random() * 7);
+        setNextTetroImage(nextTetro);
+
         HighlightBlocksBelow();
     }
 
