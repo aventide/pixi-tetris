@@ -45,7 +45,10 @@
         #ai-next-tetro-image{
             display: block;
             margin: auto;
-            padding: 30px;
+            padding: 10px;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
         }
 
         #ai-footer{
