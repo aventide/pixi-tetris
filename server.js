@@ -5,7 +5,7 @@ var path = require('path');
 //404 response
 function send404response(res){
     res.writeHead(404, {"Content-type": "text/plain"});
-    res.write("404: Page not found, bitches!");
+    res.write("404: Page not found.");
     res.end();
 }
 

@@ -12,13 +12,13 @@ function drawMosaic(divWidth, divHeight) {
             var color = Math.floor(Math.random() * randomOptions);
             switch(color){
                 case 0:
-                    block.src = './res/sprites/m_block_blue.png';
+                    block.src = '../res/sprites/m_block_blue.png';
                     break;
                 case 1:
-                    block.src = './res/sprites/m_block_lightgrey.png';
+                    block.src = '../res/sprites/m_block_lightgrey.png';
                     break;
                 case 2:
-                    block.src = './res/sprites/m_block_darkgrey.png';
+                    block.src = '../res/sprites/m_block_darkgrey.png';
 
             }
             document.getElementById('main').appendChild(block);

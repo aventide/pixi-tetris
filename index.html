@@ -4,26 +4,20 @@
 <head>
     <title>WebGL Tetris</title>
     <meta content="">
+    <meta name="viewport" content="width=device-width">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="./style.css">
+    <script src="jquery-3.2.1.min.js"></script>
     <script src="./pixi.js/bin/pixi.js"></script>
-	<script src="./globals.js"></script>
+	<!--<script src="./globals.js"></script>-->
 </head>
 
 <body>
-    <div id="ai-header">
-        <h4 style="text-align: center; font-family: 'roboto';">Last updated: 9/12/2016</h4>
+    <div id="menu"></div>
+    <div id="app-container">
+        <div id="app"></div>
     </div>
-    <div id="ai-center-container">
-        <div id="ai-center"></div>
-        <div id="ai-next-tetro">
-            <img id="ai-next-tetro-image">
-        </div>
-    </div>
-
-    <div id="ai-footer">
-        <h4 style="text-align: center; font-family: 'roboto';">Created by Alex Staples using Pixi.js</h4>
-    </div>
+    <div id="controls"></div>
     <script src="./stage.js"></script>
     <script src="./controls.js"></script>
     <script src="./block.js"></script>

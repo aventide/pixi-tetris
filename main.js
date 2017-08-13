@@ -113,38 +113,6 @@ function createTetro(nextShape) {
     return shape;
 }
 
-function setNextTetroImage(nextTetro){
-    document.getElementById("ai-next-tetro-image").src
-
-    switch(nextTetro){
-        case 0:
-            document.getElementById("ai-next-tetro-image").src = "./res/next_tetro/red_next_tetro.png";
-            break;
-        case 1:
-            document.getElementById("ai-next-tetro-image").src = "./res/next_tetro/blue_next_tetro.png";
-            break;
-        case 2:
-            document.getElementById("ai-next-tetro-image").src = "./res/next_tetro/yellow_next_tetro.png";
-            break;
-        case 3:
-            document.getElementById("ai-next-tetro-image").src = "./res/next_tetro/green_next_tetro.png";
-            break;
-        case 4:
-            document.getElementById("ai-next-tetro-image").src = "./res/next_tetro/pink_next_tetro.png";
-            break;
-        case 5:
-            document.getElementById("ai-next-tetro-image").src = "./res/next_tetro/tangerine_next_tetro.png";
-            break;
-        case 6:
-            document.getElementById("ai-next-tetro-image").src = "./res/next_tetro/purple_next_tetro.png";
-            break;
-        default:
-            document.getElementById("ai-next-tetro-image").src = "./res/next_tetro/red_next_tetro.png";
-            break;
-
-    }
-}
-
 function HighlightBlocksBelow() {
 
     // un highlight previously highlighted blocks
@@ -190,11 +158,6 @@ function getBottomTetro() {
             }
         }
     }
-
-    // for(var i = 1; i < 5; i++){
-    //  allBlocks[allBlocks.length - i].sprite.alpha = 1;
-    //  }
-    //  bottomBlock.sprite.alpha = 0.5;
 
     return bottomBlock;
 
@@ -261,7 +224,6 @@ function rotateTetro() {
 // create first tetromino
 createTetro(Math.round(Math.random() * 7));
 nextTetro = Math.round(Math.random() * 7);
-setNextTetroImage(nextTetro);
 
 function animate() {
 
@@ -334,13 +296,14 @@ function animate() {
         createTetro(nextTetro);
 
         nextTetro = Math.round(Math.random() * 7);
-        setNextTetroImage(nextTetro);
 
         HighlightBlocksBelow();
     }
 
     // scan each row on canvas for complete rows of tetrominos
     // and clear the row if condition is met
+
+
 
     // iterate by row
     for(var h = BLOCK_HALF; h < RENDERER_Y; h += BLOCK_SIZE) {

@@ -24,6 +24,10 @@ function TBlock(image, posX, posY) {
     this.sprite.position.x = posX;
     this.sprite.position.y = posY;
 
+    // size sprite depending on screen width
+    this.sprite.width = BLOCK_SIZE;
+    this.sprite.height = BLOCK_SIZE;
+
     // enable interaction for sprite
     // this.sprite.interactive = true;
 
@@ -125,7 +129,7 @@ function TBlock(image, posX, posY) {
     this.changeType = function (blockImage) {
         this.sprite.texture = PIXI.Texture.fromImage(blockImage);
         this.type = blockImage;
-    }
+    };
 
     // --------------------------
     // end block type methods
