@@ -4,10 +4,11 @@
 <head>
     <title>WebGL Tetris</title>
     <meta content="">
-    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="./style.css">
-    <script src="jquery-3.2.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <script src="./pixi.js/bin/pixi.js"></script>
 	<!--<script src="./globals.js"></script>-->
 </head>
@@ -17,7 +18,11 @@
     <div id="app-container">
         <div id="app"></div>
     </div>
-    <div id="controls"></div>
+    <div id="controls">
+        <img id="control-1" src="./res/controls/left-move-arrow.svg">
+        <img id="control-2" src="./res/controls/refresh-E1F5FE.png">
+        <img id="control-3" src="./res/controls/right-move-arrow.svg">
+    </div>
     <script src="./stage.js"></script>
     <script src="./controls.js"></script>
     <script src="./block.js"></script>

@@ -1,54 +1,26 @@
-var http = require('http');
-var fs = require('fs');
-var path = require('path');
+let express = require('express'),
+	app = express();
 
-//404 response
-function send404response(res){
-    res.writeHead(404, {"Content-type": "text/plain"});
-    res.write("404: Page not found.");
-    res.end();
-}
+const port = 5000;
+app.set('port', port);
 
-function onRequest(req, res){
-    
-//    if(req.url === '/favicon.ico'){
-//        req.writeHead(200, {'Content-Type': 'image/x-icon'});
-//        req.end();
-//        console.log("GET " + req.url);
-//        return;
-//    }
 
-    
-    if(req.method == 'GET' && req.url.startsWith('/')){
-        
-        var filePath = req.url;
-        
-        if(filePath == '/'){
-            filePath = '/index.html';
-        }
-        
-        filePath = __dirname+filePath;
-        var extname = path.extname(filePath);
-        var contentType = 'text/html';
-        
-        switch (extname) {
-            case '.js':
-                contentType = 'text/javascript';
-                break;
-            case '.css':
-                contentType = 'text/css';
-                break;
-                
-        }
-        
-        res.writeHead(200, {"Content-type": contentType});
-        fs.createReadStream(filePath).pipe(res);
-        console.log("GET " + req.url);
-    }
-    else{
-        send404response(res);
-    }
-}
+// Serve static files from the directories called 'assets' or 'dist'
+app.use('/res', express.static(__dirname + '/res'));
+app.use('/', express.static(__dirname + '/'));
 
-http.createServer(onRequest).listen(8888);
-console.log("Server started successfully.");
+
+//////////////// ROUTES ///////////////////
+
+// Show index.html file as the home page
+app.get('/', (request, response) => {
+	console.log("User connected at " + Date.now());
+	response.sendFile(__dirname + '/index.html');
+});
+
+////////////////////////////////////////////
+
+// Start the web server
+let server = app.listen(port, () => {
+	console.log('Listening on port ' + server.address().port);
+});
