@@ -9,7 +9,6 @@ app.set('port', port);
 app.use('/res', express.static(__dirname + '/res'));
 app.use('/', express.static(__dirname + '/'));
 
-
 //////////////// ROUTES ///////////////////
 
 // Show index.html file as the home page

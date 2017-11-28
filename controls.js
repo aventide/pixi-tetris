@@ -1,8 +1,8 @@
-window.oncontextmenu = function (event) {
-	event.preventDefault();
-	event.stopPropagation();
-	return false;
-};
+// window.oncontextmenu = function (event) {
+// 	event.preventDefault();
+// 	event.stopPropagation();
+// 	return false;
+// };
 
 // keyboard controls for block
 document.onkeydown = function (e) {
@@ -26,6 +26,7 @@ document.onkeydown = function (e) {
 			break;
 		// spacebar
 		case 32:
+			e.preventDefault();
 			instantDown();
 
 		default:
@@ -33,6 +34,8 @@ document.onkeydown = function (e) {
 	}
 	e.preventDefault(); // prevent the default action (scroll / move caret)
 };
+
+
 
 $("#app-container").on("taphold", () => {
 	instantDown();
