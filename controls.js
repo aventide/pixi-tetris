@@ -35,58 +35,6 @@ document.onkeydown = function (e) {
 	e.preventDefault(); // prevent the default action (scroll / move caret)
 };
 
-
-
-$("#app-container").on("taphold", () => {
-	instantDown();
-});
-
-$.event.special.tap.tapholdThreshold = 100;
-$.event.special.tap.emitTapOnTaphold = false;
-
-let id;
-$("#control-1")
-	.on('tap', () => {
-		moveTetroLeft();
-	})
-	.on('taphold', () => {
-		moveTetroLeft();
-		id = setInterval(() => {
-			moveTetroLeft()
-		}, 100);
-	})
-	.on('tap touchend', () => {
-		clearInterval(id);
-	});
-
-$("#control-2")
-	.on('tap', () => {
-		rotateTetro();
-	})
-	.on('taphold', () => {
-		rotateTetro();
-		id = setInterval(() => {
-			rotateTetro();
-		}, 100);
-	})
-	.on('touchend', () => {
-		clearInterval(id);
-	});
-
-$("#control-3")
-	.on('tap', () => {
-		moveTetroRight();
-	})
-	.on('taphold', () => {
-		moveTetroRight();
-		id = setInterval(() => {
-			moveTetroRight()
-		}, 100);
-	})
-	.on('tap touchend', () => {
-		clearInterval(id);
-	});
-
 function moveTetroLeft() {
 	var validMove = false;
 	for (var i = 1; i < 5; i++) {
